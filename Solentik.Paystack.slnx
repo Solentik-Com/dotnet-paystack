@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Solentik.Paystack.AspNetCore/Solentik.Paystack.AspNetCore.csproj" />
+    <Project Path="src/Solentik.Paystack/Solentik.Paystack.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Solentik.Paystack.AspNetCore.Tests/Solentik.Paystack.AspNetCore.Tests.csproj" />
+    <Project Path="tests/Solentik.Paystack.Tests/Solentik.Paystack.Tests.csproj" />
+  </Folder>
+</Solution>
