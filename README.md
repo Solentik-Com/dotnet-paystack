@@ -287,17 +287,10 @@ Unsuccessful Paystack responses throw `PaystackException`, which exposes:
 
 ## Development
 
-Run the complete test matrix:
+To run the complete test matrix:
 
 ```bash
 dotnet test Solentik.Paystack.slnx -c Release
-```
-
-Create local packages:
-
-```bash
-dotnet pack src/Solentik.Paystack/Solentik.Paystack.csproj -c Release -o artifacts
-dotnet pack src/Solentik.Paystack.AspNetCore/Solentik.Paystack.AspNetCore.csproj -c Release -o artifacts
 ```
 
 ## License
