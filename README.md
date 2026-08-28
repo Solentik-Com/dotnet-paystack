@@ -6,7 +6,7 @@ An idiomatic, strongly typed .NET client for the Paystack API, with optional ASP
 
 Full installation, configuration, resource, and ASP.NET Core webhook documentation is available at:
 
-**https://paystack.solentik.com/dotnet/introduction**
+**https://paystack.solentik.com/dotnet/introduction.html**
 
 ## Packages
 

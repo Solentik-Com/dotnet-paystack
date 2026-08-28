@@ -11,7 +11,7 @@
     <Description>An idiomatic, typed .NET client for the Paystack API.</Description>
     <PackageTags>paystack;payments;ghana;nigeria;fintech</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paystack.solentik.com/dotnet/introduction</PackageProjectUrl>
+    <PackageProjectUrl>https://paystack.solentik.com/dotnet/introduction.html</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Solentik-Com/dotnet-paystack</RepositoryUrl>

@@ -12,7 +12,7 @@
     <Description>ASP.NET Core webhook routing and typed event handlers for Solentik.Paystack.</Description>
     <PackageTags>paystack;payments;webhooks;aspnetcore</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paystack.solentik.com/dotnet/introduction</PackageProjectUrl>
+    <PackageProjectUrl>https://paystack.solentik.com/dotnet/introduction.html</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Solentik-Com/dotnet-paystack</RepositoryUrl>
