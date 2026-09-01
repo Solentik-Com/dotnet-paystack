@@ -102,6 +102,45 @@ public sealed class CheckoutService(IPaystackClient paystack)
 
 Transaction amounts are supplied in the currency's smallest unit.
 
+### Splitting a transaction with a subaccount
+
+To route a share of a transaction to a subaccount at checkout, set `Subaccount` (and optionally
+`TransactionCharge` and `Bearer`) on `InitializeTransactionRequest`:
+
+```csharp
+var response = await paystack.Transactions.InitializeAsync(
+    new InitializeTransactionRequest
+    {
+        Email = email,
+        Amount = amount,
+        Subaccount = "ACCT_xxxx",
+        Bearer = "subaccount" // "account" or "subaccount" - who pays the Paystack fees
+    },
+    cancellationToken);
+```
+
+`TransactionCharge` overrides the subaccount's configured percentage charge with a flat fee (in the
+currency's smallest unit) for that transaction only.
+
+For a multi-party split instead of a single subaccount, create a split with
+`paystack.TransactionSplits.CreateAsync` and pass its code as `SplitCode`:
+
+```csharp
+var split = await paystack.TransactionSplits.CreateAsync(/* ... */);
+
+var response = await paystack.Transactions.InitializeAsync(
+    new InitializeTransactionRequest
+    {
+        Email = email,
+        Amount = amount,
+        SplitCode = split.Data?.SplitCode
+    },
+    cancellationToken);
+```
+
+`Subaccount`/`TransactionCharge`/`Bearer` and `SplitCode` are alternative ways to split a transaction;
+Paystack does not expect both to be set on the same request.
+
 ## Customers
 
 ```csharp
@@ -214,6 +253,9 @@ await paystack.PaymentRequests.NotifyAsync(requestCode!);
 ```
 
 Payment requests support create, list, fetch, verify, notify, totals, finalize, update, and archive operations.
+
+Pass `SplitCode` on `CreatePaymentRequestRequest`/`UpdatePaymentRequestRequest` to route the invoice's
+payment through a transaction split created with `paystack.TransactionSplits.CreateAsync`.
 
 ## Miscellaneous
 

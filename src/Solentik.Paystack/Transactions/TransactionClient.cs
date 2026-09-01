@@ -24,6 +24,11 @@ internal sealed class TransactionClient(HttpClient httpClient, IOptions<Paystack
             throw new ArgumentOutOfRangeException(nameof(request), "The amount must be greater than zero.");
         }
 
+        if (request.Bearer is not null && request.Bearer is not ("account" or "subaccount"))
+        {
+            throw new ArgumentException("The bearer must be \"account\" or \"subaccount\".", nameof(request));
+        }
+
         return PostAsync<InitializeTransactionData>("transaction/initialize", request, cancellationToken);
     }
 

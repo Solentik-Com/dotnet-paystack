@@ -36,6 +36,51 @@ public sealed class TransactionClientTests
     }
 
     [Fact]
+    public async Task InitializeAsync_SendsSubaccountSplitFields()
+    {
+        var handler = new RecordingHandler(HttpStatusCode.OK, """
+            {"status":true,"message":"Authorization URL created","data":{"authorization_url":"https://checkout.test","access_code":"access","reference":"ref-1"}}
+            """);
+        var client = CreateClient(handler);
+
+        await client.InitializeAsync(
+            new InitializeTransactionRequest
+            {
+                Email = "buyer@solentik.com",
+                Amount = 5000,
+                Subaccount = "ACCT_xxxx",
+                TransactionCharge = 200,
+                Bearer = "subaccount",
+                SplitCode = "SPL_xxxx"
+            },
+            TestContext.Current.CancellationToken);
+
+        Assert.Contains("\"subaccount\":\"ACCT_xxxx\"", handler.Body);
+        Assert.Contains("\"transaction_charge\":200", handler.Body);
+        Assert.Contains("\"bearer\":\"subaccount\"", handler.Body);
+        Assert.Contains("\"split_code\":\"SPL_xxxx\"", handler.Body);
+    }
+
+    [Fact]
+    public async Task InitializeAsync_RejectsInvalidBearer()
+    {
+        var handler = new RecordingHandler(HttpStatusCode.OK, """
+            {"status":true,"message":"Authorization URL created","data":{"authorization_url":"https://checkout.test","access_code":"access","reference":"ref-1"}}
+            """);
+        var client = CreateClient(handler);
+
+        await Assert.ThrowsAsync<ArgumentException>(() => client.InitializeAsync(
+            new InitializeTransactionRequest
+            {
+                Email = "buyer@solentik.com",
+                Amount = 5000,
+                Subaccount = "ACCT_xxxx",
+                Bearer = "vendor"
+            },
+            TestContext.Current.CancellationToken));
+    }
+
+    [Fact]
     public async Task VerifyAsync_EscapesReferenceAndDeserializesTransaction()
     {
         var handler = new RecordingHandler(HttpStatusCode.OK, """
