@@ -169,6 +169,26 @@ var split = await paystack.TransactionSplits.CreateAsync(
 
 Splits support create, list, fetch, update, add/update subaccount, and remove subaccount operations.
 
+## Subaccounts
+
+```csharp
+using Solentik.Paystack.Subaccounts.Models;
+
+var subaccount = await paystack.Subaccounts.CreateAsync(
+    new CreateSubaccountRequest
+    {
+        BusinessName = "Sunshine Studios",
+        SettlementBank = "058",
+        AccountNumber = "0123456047",
+        PercentageCharge = 18.2m,
+        PrimaryContactEmail = "dafe@sunshinestudios.com"
+    });
+
+var subaccountCode = subaccount.Data?.SubaccountCode;
+```
+
+Subaccounts support create, list, fetch, and update operations.
+
 ## Miscellaneous
 
 ```csharp
