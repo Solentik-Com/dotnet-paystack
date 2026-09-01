@@ -4,6 +4,7 @@ using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Options;
 using Solentik.Paystack.Customers;
 using Solentik.Paystack.Miscellaneous;
+using Solentik.Paystack.PaymentRequests;
 using Solentik.Paystack.Plans;
 using Solentik.Paystack.Subaccounts;
 using Solentik.Paystack.Subscriptions;
@@ -76,6 +77,8 @@ public static class PaystackServiceCollectionExtensions
             new MiscellaneousClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<IVerificationClient>(sp =>
             new VerificationClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
+        services.AddTransient<IPaymentRequestClient>(sp =>
+            new PaymentRequestClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<IPaystackClient, PaystackClient>();
         services.AddSingleton<IPaystackWebhookVerifier, PaystackWebhookVerifier>();
         return services;

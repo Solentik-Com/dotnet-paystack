@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <PackageId>Solentik.Paystack.AspNetCore</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Solentik</Authors>
     <Company>Solentik</Company>
     <Description>ASP.NET Core webhook routing and typed event handlers for Solentik.Paystack.</Description>

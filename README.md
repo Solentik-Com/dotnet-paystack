@@ -189,6 +189,32 @@ var subaccountCode = subaccount.Data?.SubaccountCode;
 
 Subaccounts support create, list, fetch, and update operations.
 
+## Payment requests (invoicing)
+
+```csharp
+using Solentik.Paystack.PaymentRequests.Models;
+
+var invoice = await paystack.PaymentRequests.CreateAsync(
+    new CreatePaymentRequestRequest
+    {
+        Customer = "CUS_xxxx",
+        Amount = 5000000,
+        DueDate = DateTimeOffset.UtcNow.AddDays(7),
+        Description = "Website design",
+        LineItems =
+        [
+            new PaymentRequestLineItem { Name = "Design", Amount = 4000000 },
+            new PaymentRequestLineItem { Name = "Hosting", Amount = 1000000 }
+        ]
+    });
+
+var requestCode = invoice.Data?.RequestCode;
+await paystack.PaymentRequests.FinalizeAsync(requestCode!);
+await paystack.PaymentRequests.NotifyAsync(requestCode!);
+```
+
+Payment requests support create, list, fetch, verify, notify, totals, finalize, update, and archive operations.
+
 ## Miscellaneous
 
 ```csharp

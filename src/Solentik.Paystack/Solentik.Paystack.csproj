@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Solentik.Paystack</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Solentik</Authors>
     <Company>Solentik</Company>
     <Description>An idiomatic, typed .NET client for the Paystack API.</Description>
