@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Solentik.Paystack.Customers;
 using Solentik.Paystack.Miscellaneous;
 using Solentik.Paystack.Plans;
+using Solentik.Paystack.Subaccounts;
 using Solentik.Paystack.Subscriptions;
 using Solentik.Paystack.TransactionSplits;
 using Solentik.Paystack.Transactions;
@@ -69,6 +70,8 @@ public static class PaystackServiceCollectionExtensions
             new SubscriptionClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<ITransactionSplitClient>(sp =>
             new TransactionSplitClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
+        services.AddTransient<ISubaccountClient>(sp =>
+            new SubaccountClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<IMiscellaneousClient>(sp =>
             new MiscellaneousClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<IVerificationClient>(sp =>

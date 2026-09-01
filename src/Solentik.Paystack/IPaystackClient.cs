@@ -1,6 +1,7 @@
 using Solentik.Paystack.Customers;
 using Solentik.Paystack.Miscellaneous;
 using Solentik.Paystack.Plans;
+using Solentik.Paystack.Subaccounts;
 using Solentik.Paystack.Subscriptions;
 using Solentik.Paystack.TransactionSplits;
 using Solentik.Paystack.Transactions;
@@ -16,6 +17,7 @@ public interface IPaystackClient
     IPlanClient Plans { get; }
     ISubscriptionClient Subscriptions { get; }
     ITransactionSplitClient TransactionSplits { get; }
+    ISubaccountClient Subaccounts { get; }
     IMiscellaneousClient Miscellaneous { get; }
     IVerificationClient Verification { get; }
 }
@@ -26,6 +28,7 @@ internal sealed class PaystackClient(
     IPlanClient plans,
     ISubscriptionClient subscriptions,
     ITransactionSplitClient transactionSplits,
+    ISubaccountClient subaccounts,
     IMiscellaneousClient miscellaneous,
     IVerificationClient verification) : IPaystackClient
 {
@@ -34,6 +37,7 @@ internal sealed class PaystackClient(
     public IPlanClient Plans { get; } = plans;
     public ISubscriptionClient Subscriptions { get; } = subscriptions;
     public ITransactionSplitClient TransactionSplits { get; } = transactionSplits;
+    public ISubaccountClient Subaccounts { get; } = subaccounts;
     public IMiscellaneousClient Miscellaneous { get; } = miscellaneous;
     public IVerificationClient Verification { get; } = verification;
 }
