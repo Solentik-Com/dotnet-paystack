@@ -6,6 +6,7 @@ using Solentik.Paystack.Subaccounts;
 using Solentik.Paystack.Subscriptions;
 using Solentik.Paystack.TransactionSplits;
 using Solentik.Paystack.Transactions;
+using Solentik.Paystack.Transfers;
 using Solentik.Paystack.Verification;
 
 namespace Solentik.Paystack;
@@ -22,6 +23,9 @@ public interface IPaystackClient
     IMiscellaneousClient Miscellaneous { get; }
     IVerificationClient Verification { get; }
     IPaymentRequestClient PaymentRequests { get; }
+    ITransferClient Transfers { get; }
+    ITransferRecipientClient TransferRecipients { get; }
+    ITransferControlClient TransferControl { get; }
 }
 
 internal sealed class PaystackClient(
@@ -33,7 +37,10 @@ internal sealed class PaystackClient(
     ISubaccountClient subaccounts,
     IMiscellaneousClient miscellaneous,
     IVerificationClient verification,
-    IPaymentRequestClient paymentRequests) : IPaystackClient
+    IPaymentRequestClient paymentRequests,
+    ITransferClient transfers,
+    ITransferRecipientClient transferRecipients,
+    ITransferControlClient transferControl) : IPaystackClient
 {
     public ITransactionClient Transactions { get; } = transactions;
     public ICustomerClient Customers { get; } = customers;
@@ -44,4 +51,7 @@ internal sealed class PaystackClient(
     public IMiscellaneousClient Miscellaneous { get; } = miscellaneous;
     public IVerificationClient Verification { get; } = verification;
     public IPaymentRequestClient PaymentRequests { get; } = paymentRequests;
+    public ITransferClient Transfers { get; } = transfers;
+    public ITransferRecipientClient TransferRecipients { get; } = transferRecipients;
+    public ITransferControlClient TransferControl { get; } = transferControl;
 }

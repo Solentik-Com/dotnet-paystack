@@ -300,6 +300,54 @@ var validated = await paystack.Verification.ValidateAccountAsync(
 var cardInfo = await paystack.Verification.ResolveCardBinAsync("539983");
 ```
 
+## Transfers
+
+Create a recipient, then send money to it:
+
+```csharp
+using Solentik.Paystack.Transfers.Models;
+
+var recipient = await paystack.TransferRecipients.CreateAsync(
+    new CreateTransferRecipientRequest
+    {
+        Type = "nuban",
+        Name = "Stephen Asare",
+        AccountNumber = "0123456789",
+        BankCode = "058",
+        Currency = "NGN"
+    });
+
+var transfer = await paystack.Transfers.InitiateAsync(
+    new InitiateTransferRequest
+    {
+        Amount = 10000,
+        Recipient = recipient.Data!.RecipientCode!,
+        Reason = "Monthly Salary"
+    });
+
+if (transfer.Data?.Status == "otp")
+{
+    // Transfers OTP is enabled on the integration; finalize with the code sent to the business phone.
+    await paystack.Transfers.FinalizeAsync(transfer.Data.TransferCode!, otp: "123456");
+}
+```
+
+`ITransferRecipientClient` also supports `BulkCreateAsync`, `ListAsync`, `FetchAsync`, `UpdateAsync`, and `DeleteAsync` (sets the recipient inactive rather than removing it). `ITransferClient` also supports `BulkInitiateAsync` (requires Transfers OTP to be disabled first), `ListAsync`, `FetchAsync`, and `VerifyAsync`.
+
+`ITransferControlClient` manages the account-level balance and the Transfers OTP requirement:
+
+```csharp
+var balances = await paystack.TransferControl.CheckBalanceAsync();
+
+// Disabling OTP is itself a two-step, OTP-confirmed action:
+await paystack.TransferControl.RequestDisableOtpAsync();
+await paystack.TransferControl.FinalizeDisableOtpAsync(otp: "123456");
+```
+
+Transfer amounts are supplied in the currency's smallest unit, the same as transactions.
+
+`Transfer.Recipient` is left as `JsonElement` rather than one fixed type: Paystack returns the recipient's bare numeric ID on `InitiateAsync`/`FinalizeAsync`'s response, but a fully expanded object (shaped like `TransferRecipient`) on `ListAsync`/`FetchAsync`/`VerifyAsync`'s response. `BulkInitiateAsync` returns `IReadOnlyList<BulkTransferResult>`; a smaller shape than `Transfer` (`reference`, `recipient` as a string code, `amount`, `transfer_code`, `currency`, `status`). `DeleteAsync` and every `ITransferControlClient` OTP method (`ResendOtpAsync`, `RequestDisableOtpAsync`, `FinalizeDisableOtpAsync`, `EnableOtpAsync`) return `PaystackResponse<JsonElement>` since Paystack's own response for these carries only a message, no `data`.
+
 ## ASP.NET Core webhooks
 
 Register webhook services and map the endpoint:
@@ -360,7 +408,7 @@ public sealed class PaymentSuccessHandler
 }
 ```
 
-Supported typed events include payment success, subscription lifecycle, invoice lifecycle, and disputes. Generic `WebhookReceived` and `WebhookHandled` handlers are also available.
+Supported typed events include payment success, subscription lifecycle, invoice lifecycle, disputes, and transfer success/failed/reversed. Generic `WebhookReceived` and `WebhookHandled` handlers are also available.
 
 Webhook requests are verified against the exact raw body using HMAC-SHA512 and a timing-safe comparison. Invalid signatures are rejected before dispatch.
 

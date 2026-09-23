@@ -25,6 +25,10 @@ public sealed class DependencyInjectionTests
         Assert.NotNull(client.TransactionSplits);
         Assert.NotNull(client.Miscellaneous);
         Assert.NotNull(client.Verification);
+        Assert.NotNull(client.PaymentRequests);
+        Assert.NotNull(client.Transfers);
+        Assert.NotNull(client.TransferRecipients);
+        Assert.NotNull(client.TransferControl);
         Assert.NotSame(client, provider.GetRequiredService<IPaystackClient>());
         Assert.NotNull(provider.GetRequiredService<IPaystackWebhookVerifier>());
     }

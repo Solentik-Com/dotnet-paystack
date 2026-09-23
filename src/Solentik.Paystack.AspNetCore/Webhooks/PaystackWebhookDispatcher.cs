@@ -23,6 +23,9 @@ internal sealed class PaystackWebhookDispatcher(IServiceProvider services) : IPa
             "invoice.update" => await DispatchToHandlersAsync(new InvoiceUpdated(data, payload), cancellationToken),
             "invoice.payment_failed" => await DispatchToHandlersAsync(new InvoicePaymentFailed(data, payload), cancellationToken),
             "charge.dispute.create" => await DispatchToHandlersAsync(new ChargeDisputeCreated(data, payload), cancellationToken),
+            "transfer.success" => await DispatchToHandlersAsync(new TransferSuccess(data, payload), cancellationToken),
+            "transfer.failed" => await DispatchToHandlersAsync(new TransferFailed(data, payload), cancellationToken),
+            "transfer.reversed" => await DispatchToHandlersAsync(new TransferReversed(data, payload), cancellationToken),
             _ => false
         };
 

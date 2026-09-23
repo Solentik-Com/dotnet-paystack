@@ -55,6 +55,21 @@ internal static class RequestUtilities
         query.Add(new(key, value.Value.ToString(CultureInfo.InvariantCulture)));
     }
 
+    public static void AddPositive(List<KeyValuePair<string, string>> query, string key, long? value)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        if (value <= 0)
+        {
+            throw new ArgumentOutOfRangeException(key, "The value must be greater than zero.");
+        }
+
+        query.Add(new(key, value.Value.ToString(CultureInfo.InvariantCulture)));
+    }
+
     public static string WithQuery(string path, IEnumerable<KeyValuePair<string, string>> query)
     {
         var values = query.ToArray();

@@ -10,6 +10,7 @@ using Solentik.Paystack.Subaccounts;
 using Solentik.Paystack.Subscriptions;
 using Solentik.Paystack.TransactionSplits;
 using Solentik.Paystack.Transactions;
+using Solentik.Paystack.Transfers;
 using Solentik.Paystack.Verification;
 using Solentik.Paystack.Webhooks;
 
@@ -79,6 +80,12 @@ public static class PaystackServiceCollectionExtensions
             new VerificationClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<IPaymentRequestClient>(sp =>
             new PaymentRequestClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
+        services.AddTransient<ITransferClient>(sp =>
+            new TransferClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
+        services.AddTransient<ITransferRecipientClient>(sp =>
+            new TransferRecipientClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
+        services.AddTransient<ITransferControlClient>(sp =>
+            new TransferControlClient(CreateHttpClient(sp), sp.GetRequiredService<IOptions<PaystackOptions>>()));
         services.AddTransient<IPaystackClient, PaystackClient>();
         services.AddSingleton<IPaystackWebhookVerifier, PaystackWebhookVerifier>();
         return services;

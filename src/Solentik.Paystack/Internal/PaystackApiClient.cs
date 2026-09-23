@@ -46,6 +46,9 @@ internal abstract class PaystackApiClient
         CancellationToken cancellationToken) =>
         SendWithJsonAsync<T>(HttpMethod.Put, path, payload, cancellationToken);
 
+    protected Task<PaystackResponse<T>> DeleteAsync<T>(string path, CancellationToken cancellationToken) =>
+        SendAsync<T>(new HttpRequestMessage(HttpMethod.Delete, path), cancellationToken);
+
     private Task<PaystackResponse<T>> SendWithJsonAsync<T>(
         HttpMethod method,
         string path,

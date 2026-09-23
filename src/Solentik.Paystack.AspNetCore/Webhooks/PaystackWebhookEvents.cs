@@ -33,3 +33,12 @@ public sealed record InvoicePaymentFailed(JsonElement EventData, JsonElement Raw
 
 public sealed record ChargeDisputeCreated(JsonElement EventData, JsonElement RawPayload)
     : PaystackWebhookEvent("charge.dispute.create", EventData, RawPayload);
+
+public sealed record TransferSuccess(JsonElement EventData, JsonElement RawPayload)
+    : PaystackWebhookEvent("transfer.success", EventData, RawPayload);
+
+public sealed record TransferFailed(JsonElement EventData, JsonElement RawPayload)
+    : PaystackWebhookEvent("transfer.failed", EventData, RawPayload);
+
+public sealed record TransferReversed(JsonElement EventData, JsonElement RawPayload)
+    : PaystackWebhookEvent("transfer.reversed", EventData, RawPayload);

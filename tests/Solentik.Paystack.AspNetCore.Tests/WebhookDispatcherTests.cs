@@ -15,7 +15,10 @@ public sealed class WebhookDispatcherTests
         "invoice.create",
         "invoice.update",
         "invoice.payment_failed",
-        "charge.dispute.create"
+        "charge.dispute.create",
+        "transfer.success",
+        "transfer.failed",
+        "transfer.reversed"
     };
 
     [Theory]
